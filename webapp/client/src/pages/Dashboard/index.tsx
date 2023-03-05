@@ -1,7 +1,7 @@
-const Dashboard = ({ title }: any) => {
+const Dashboard = () => {
   return (
     <div>
-      <h1>{title ?? 'Dashboard'}</h1>
+      <h1>Dashboard</h1>
     </div>
   );
 };
