@@ -1,9 +1,16 @@
 import { useAuth0 } from '@auth0/auth0-react';
+
 import image from '../../assets/hero.jpg';
 import logo from '../../assets/logo-large-transparent.png';
 
 const Welcome = () => {
-  const { loginWithRedirect } = useAuth0();
+  const { loginWithRedirect, isLoading, isAuthenticated } = useAuth0();
+
+  console.log(isAuthenticated);
+
+  if (isLoading) {
+    return <p>loading..............................</p>;
+  }
 
   return (
     <div className="flex w-screen h-screen">

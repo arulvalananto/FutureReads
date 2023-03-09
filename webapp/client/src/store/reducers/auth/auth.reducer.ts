@@ -2,10 +2,11 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { AuthState } from './auth.interface';
 import { fetchAuthData } from './auth.thunk';
+import { State } from '../../index';
 
 const initialState: AuthState = {
-  entities: [],
   loading: 'idle',
+  isLoggedIn: false,
 };
 
 // Then, handle actions in your reducers:
@@ -14,9 +15,14 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     login: (state) => {
-      state.loading = 'failed';
+      state.loading = 'succeeded';
+      state.isLoggedIn = true;
     },
     logout: (state) => {
+      state.loading = 'succeeded';
+      state.isLoggedIn = false;
+    },
+    login_failed: (state) => {
       state.loading = 'failed';
     },
   },
@@ -29,4 +35,6 @@ const authSlice = createSlice({
 
 export default authSlice.reducer;
 
-export const { login } = authSlice.actions;
+export const { login, login_failed, logout } = authSlice.actions;
+
+export const authSelector = (state: State) => state.auth;

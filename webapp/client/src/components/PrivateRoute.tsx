@@ -1,5 +1,8 @@
 import { ReactElement } from 'react';
-import { useNavigate } from 'react-router';
+import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router';
+
+import { authSelector } from '../store/reducers/auth/auth.reducer';
 
 interface PrivateRouteProps {
   element: ReactElement;
@@ -7,14 +10,9 @@ interface PrivateRouteProps {
 }
 
 const PrivateRoute = ({ element, to }: PrivateRouteProps) => {
-  const navigate = useNavigate();
+  const { isLoggedIn } = useSelector(authSelector);
 
-  if (!localStorage.getItem('fr_token')) {
-    navigate(to);
-    return null;
-  }
-
-  return <div>{element}</div>;
+  return isLoggedIn ? <div>{element}</div> : <Navigate to={to} replace />;
 };
 
 export default PrivateRoute;

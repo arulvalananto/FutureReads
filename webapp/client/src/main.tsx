@@ -1,11 +1,11 @@
 import { StrictMode } from 'react';
 import { Provider } from 'react-redux';
 import * as ReactDOM from 'react-dom/client';
-import { RouterProvider } from 'react-router-dom';
 import { Auth0Provider } from '@auth0/auth0-react';
 
 import store from './store';
-import router from './app/router';
+import App from './app/app';
+import { BrowserRouter } from 'react-router-dom';
 
 const RenderApp = () => {
   return (
@@ -17,9 +17,11 @@ const RenderApp = () => {
           redirect_uri: window.location.origin,
         }}
       >
-        <Provider store={store}>
-          <RouterProvider router={router} />
-        </Provider>
+        <BrowserRouter>
+          <Provider store={store}>
+            <App />
+          </Provider>
+        </BrowserRouter>
       </Auth0Provider>
     </StrictMode>
   );
