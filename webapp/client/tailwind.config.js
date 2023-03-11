@@ -12,9 +12,10 @@ module.exports = {
   ],
   theme: {
     extend: {
-      color: {
+      colors: {
         primary: '#F3F1EF',
         secondary: '#95CFD9',
+        primarybg: '#F3F1EF',
       },
       fontFamily: {
         'quick-sand': ['Quicksand', 'sans-serif'],

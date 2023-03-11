@@ -4,6 +4,7 @@ import { useCallback, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import Welcome from '../pages/Welcome';
+import Loader from 'src/components/Loader';
 import Dashboard from '../pages/Dashboard';
 import PublicRoute from '../components/PublicRoute';
 import PrivateRoute from '../components/PrivateRoute';
@@ -12,19 +13,21 @@ import {
   login,
   login_failed,
 } from '../store/reducers/auth/auth.reducer';
+import useLocalStorage from 'src/hooks/useLocalStorage';
+import constants from 'src/common/constants';
 
 const App = () => {
   const dispatch = useDispatch();
-  const { isLoggedIn, loading } = useSelector(authSelector);
   const { isLoading, getAccessTokenSilently } = useAuth0();
+  const { isLoggedIn, loading } = useSelector(authSelector);
+  const { setLocalStorageValue } = useLocalStorage(constants.TOKEN_NAME);
 
   const fetchAccessToken = useCallback(async () => {
     try {
       if (!isLoggedIn) {
-        const token = await getAccessTokenSilently();
-        if (token) {
-          console.log(token);
-          // store the token in local storage for that, create a hook
+        const newToken = await getAccessTokenSilently();
+        if (newToken) {
+          setLocalStorageValue(newToken);
           await dispatch(login());
         }
       }
@@ -32,14 +35,14 @@ const App = () => {
       await dispatch(login_failed());
       console.error(error);
     }
-  }, []);
+  }, [dispatch, getAccessTokenSilently, isLoggedIn, setLocalStorageValue]);
 
   useEffect(() => {
     fetchAccessToken();
-  }, []);
+  }, [fetchAccessToken]);
 
   if (isLoading || loading === 'idle') {
-    return <p>Loading....</p>;
+    return <Loader />;
   }
 
   return (

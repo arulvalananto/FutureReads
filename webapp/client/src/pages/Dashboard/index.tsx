@@ -1,13 +1,13 @@
-import { useAuth0 } from '@auth0/auth0-react';
+import styles from './index.module.scss';
+import Sidebar from '../../components/Sidebar';
 
 const Dashboard = () => {
-  const { logout } = useAuth0();
   return (
-    <div>
-      <h1>Dashboard</h1>
-      <button type="button" onClick={() => logout()}>
-        Logout
-      </button>
+    <div className={styles.dashboard}>
+      <div className={styles['dashboard-sidebar']}>
+        <Sidebar />
+      </div>
+      <div className={styles['dashboard-body']}></div>
     </div>
   );
 };

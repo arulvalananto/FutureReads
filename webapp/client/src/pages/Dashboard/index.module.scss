@@ -1,0 +1,14 @@
+@tailwind utilities;
+
+@layer utilities {
+  .dashboard {
+    @apply w-screen h-screen bg-white flex;
+
+    .dashboard-sidebar {
+      @apply flex-none hidden lg:block w-64;
+    }
+    .dashboard-body {
+      @apply flex-auto bg-primarybg lg:rounded-tl-3xl lg:rounded-bl-3xl;
+    }
+  }
+}
